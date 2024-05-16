@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.min.css' %}"
+    /> -->
+
+    <title>予約システム</title>
+  </head>
+
+  <body class="flex flex-col min-h-screen">
+    <nav class="py-2 border-b">
+      <div
+        class="max-w-screen-sm flex justify-between items-center mx-auto px-2"
+      >
+        <div class="text-xl font-bold">
+          <a href="/">予約システム</a>
+        </div>
+
+        <div class="flex items-center space-x-5 text-sm">
+          {% if user.is_authenticated %}
+          <!-- ログイン状態 -->
+          {% if user.is_superuser %}
+          <!-- 管理者 -->
+          <a href="{% url 'app:store_register' %}">店舗登録</a>
+          <a href="{% url 'app:service_register' %}" class="">サービス登録</a>
+          <a href="{% url 'app:store_holiday' %}" class="">特別休日登録</a>
+          {% else %}
+          <!-- スタッフ -->
+          <a href="{% url 'app:profile' %}" class="">プロフィール</a>
+          <a href="{% url 'app:reservation' %}" class="">予約一覧</a>
+          <a href="{% url 'app:staff_holiday' %}" class="">休日登録</a>
+          {% endif %}
+          <a href="{% url 'accounts:logout' %}">ログアウト</a>
+          {% else %}
+          <!-- ログアウト状態 -->
+          <a href="{% url 'accounts:login' %}">ログイン</a>
+          <a href="{% url 'accounts:signup' %}">アカウント登録</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-1 container mx-auto max-w-screen-sm px-2 py-5">
+      {% block content %} {% endblock %}
+    </main>
+
+    <footer class="border-t py-2 text-center text-sm mt-5">
+      &copy; フルスタックチャンネル
+    </footer>
+  </body>
+</html>

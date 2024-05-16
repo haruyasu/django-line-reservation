@@ -1,0 +1,74 @@
+{% extends "app/base.html" %} {% load widget_tweaks %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">店舗登録</div>
+
+<div class="mb-5">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="font-bold mb-2">店舗名</div>
+    <div class="mb-5">
+      {% render_field form.name class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="店舗名" %}
+    </div>
+
+    <div class="font-bold mb-2">店舗画像</div>
+    <div class="mb-5">{{ form.image }}</div>
+
+    <div class="font-bold mb-2">開店時間</div>
+    <div class="mb-5">
+      {% render_field form.open_time class="border w-full p-2 rounded bg-gray-50 focus:bg-white"%}
+    </div>
+
+    <div class="font-bold mb-2">閉店時間</div>
+    <div class="mb-5">
+      {% render_field form.close_time class="border w-full p-2 rounded bg-gray-50 focus:bg-white"%}
+    </div>
+
+    <div class="font-bold mb-2">定休日</div>
+
+    <table class="w-full text-center border rounded mb-5">
+      <tr class="bg-gray-100 border-b">
+        <th class="py-2 border-r">月</th>
+        <th class="py-2 border-r">火</th>
+        <th class="py-2 border-r">水</th>
+        <th class="py-2 border-r">木</th>
+        <th class="py-2 border-r">金</th>
+        <th class="py-2 border-r text-blue-500">土</th>
+        <th class="py-2 text-red-500">日</th>
+      </tr>
+      <tr class="border-b">
+        <td class="py-2 border-r">{% render_field form.closed_monday %}</td>
+        <td class="py-2 border-r">{% render_field form.closed_tuesday %}</td>
+        <td class="py-2 border-r">{% render_field form.closed_wednesday %}</td>
+        <td class="py-2 border-r">{% render_field form.closed_thursday %}</td>
+        <td class="py-2 border-r">{% render_field form.closed_friday %}</td>
+        <td class="py-2 border-r">{% render_field form.closed_saturday %}</td>
+        <td class="py-2">{% render_field form.closed_sunday %}</td>
+      </tr>
+    </table>
+
+    <div class="font-bold mb-2">住所</div>
+    <div class="mb-5">
+      {% render_field form.address class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="東京都品川区"%}
+    </div>
+
+    <div class="font-bold mb-2">電話番号</div>
+    <div class="mb-5">
+      {% render_field form.tel class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="00-0000-0000"%}
+    </div>
+
+    <div class="font-bold mb-2">詳細</div>
+    <div class="mb-5">
+      {% render_field form.description class="border w-full p-2 rounded bg-gray-50 focus:bg-white"%}
+    </div>
+
+    <div class="text-center">
+      <button
+        class="bg-black text-white font-bold w-full rounded py-2"
+        type="submit"
+      >
+        登録する
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

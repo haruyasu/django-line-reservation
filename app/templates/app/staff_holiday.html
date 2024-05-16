@@ -1,0 +1,42 @@
+{% extends "app/base.html" %} {% load widget_tweaks %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">休日登録</div>
+
+<form method="post" class="mb-5">
+  {% csrf_token %}
+  <div>
+    <div class="font-bold mb-2">休日</div>
+    <div class="mb-5">
+      {% render_field form.holiday class="border w-full p-2 rounded bg-gray-50 focus:bg-white" %}
+    </div>
+    <div class="font-bold mb-2">理由</div>
+    <div class="mb-5">
+      {% render_field form.reason class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="理由" %}
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button
+      class="bg-black text-white font-bold w-full rounded py-2"
+      type="submit"
+    >
+      登録する
+    </button>
+  </div>
+</form>
+
+<div class="text-center font-bold text-2xl mb-5">登録済みの休日</div>
+
+<table class="w-full text-center border rounded">
+  <tr class="bg-gray-100 border-b">
+    <th class="py-2 border-r">休日</th>
+    <th class="py-2">理由</th>
+  </tr>
+  {% for staff_holiday in staff_holidays %}
+  <tr class="border-b">
+    <td class="py-2 border-r w-[150px]">{{ staff_holiday.holiday }}</td>
+    <td class="py-2">{{ staff_holiday.reason }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

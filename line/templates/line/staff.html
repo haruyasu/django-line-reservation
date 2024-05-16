@@ -1,0 +1,36 @@
+{% extends "line/base.html" %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">スタッフ</div>
+
+<div class="grid grid-cols-2 gap-2">
+  {% for staff in staffs %}
+  <div class="border mb-5 w-full rounded-md">
+    <a
+      href="{% url 'line:calendar' service_id=service_id staff_id=staff.id %}{% if reservation_id %}?reservation_id={{ reservation_id }}{% endif %}{% if reservation_id %}&{% else %}?{% endif %}line_id={{line_id}}"
+    >
+      <div class="relative pb-[177.77%] overflow-hidden rounded-t-md">
+        {% if staff.image %}
+        <img
+          src="{{staff.image.url}}"
+          alt="画像"
+          class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        {% else %}
+        <img
+          src="{% static 'img/noImage.png' %}"
+          alt="画像"
+          class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        {% endif %}
+      </div>
+
+      <div class="p-2 space-y-1">
+        <div class="font-bold">{{ staff.user.name }}</div>
+        <div>{{ staff.position }}</div>
+        <div>指名料：{{ staff.nomination_fee }}円</div>
+        <div class="whitespace-pre-line">{{ staff.bio }}</div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

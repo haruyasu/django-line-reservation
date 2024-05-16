@@ -1,0 +1,32 @@
+{% extends "app/base.html" %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">店舗一覧</div>
+
+<div class="grid grid-cols-2 gap-5">
+  {% for store in stores %}
+  <div class="border rounded-md">
+    <a href="{% url 'app:store_detail' store.id %}">
+      <div class="relative pb-[56.25%] overflow-hidden rounded-t-md">
+        {% if store.image %}
+        <img
+          src="{{store.image.url}}"
+          alt="画像"
+          class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        {% else %}
+        <img
+          src="{% static 'img/noImage.png' %}"
+          alt="画像"
+          class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+        {% endif %}
+      </div>
+    </a>
+
+    <div class="p-2">
+      <div class="font-bold">{{ store.name }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

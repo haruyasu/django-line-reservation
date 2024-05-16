@@ -1,0 +1,10 @@
+myvenv
+db.sqlite3
+.vscode
+__pycache__
+*.pyc
+.DS_Store
+.env
+ngrok.exe
+node_modules
+media

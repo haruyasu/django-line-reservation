@@ -1,0 +1,27 @@
+{% extends "app/base.html" %} {% load widget_tweaks %} {% block content %}
+
+<div class="text-center font-bold text-2xl mb-5">ログイン</div>
+
+<div class="max-w-[500px] mx-auto">
+  <form method="post">
+    {% csrf_token %}
+    <div class="font-bold mb-2">メールアドレス</div>
+    <div class="mb-5">
+      {% render_field form.login class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="mail@example.com" %}
+    </div>
+    <div class="font-bold">パスワード</div>
+    <div class="mb-5">
+      {% render_field form.password class="border w-full p-2 rounded bg-gray-50 focus:bg-white" placeholder="英数字8文字以上" %}
+    </div>
+    <div class="text-center">
+      <button
+        class="bg-black text-white font-bold w-full rounded py-2 hover:bg-black/80"
+        type="submit"
+      >
+        ログイン
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

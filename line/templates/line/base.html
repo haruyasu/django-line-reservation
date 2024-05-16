@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.min.css' %}"
+    />
+     -->
+    <title>予約管理システム</title>
+  </head>
+
+  <body>
+    <main class="container mx-auto max-w-screen-sm px-2 py-5">
+      {% block content %} {% endblock %}
+    </main>
+
+    <script
+      charset="utf-8"
+      src="https://static.line-scdn.net/liff/edge/2/sdk.js"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    {% block extrajs %} {% endblock %}
+  </body>
+</html>

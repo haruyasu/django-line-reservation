@@ -1,0 +1,25 @@
+{% extends "app/base.html" %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">予約一覧</div>
+
+<table class="w-full text-center border rounded">
+  <tr class="bg-gray-100 border-b">
+    <th class="py-2 border-r">日時</th>
+    <th class="py-2 border-r">サービス</th>
+    <th class="py-2 border-r">名前</th>
+    <th class="py-2 border-r">性別</th>
+    <th class="py-2 border-r">電話番号</th>
+    <th class="py-2">担当者</th>
+  </tr>
+  {% for reservation in reservations %}
+  <tr class="border-b">
+    <td class="py-2 border-r">{{ reservation.reservation_date }}</td>
+    <td class="py-2 border-r">{{ reservation.service.name }}</td>
+    <td class="py-2 border-r">{{ reservation.customer.name }}</td>
+    <td class="py-2 border-r">{{ reservation.customer.get_gender_display }}</td>
+    <td class="py-2 border-r">{{ reservation.customer.phone_number }}</td>
+    <td class="py-2">{{ reservation.staff.user.name }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

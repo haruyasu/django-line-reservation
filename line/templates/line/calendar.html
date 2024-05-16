@@ -1,0 +1,64 @@
+{% extends "line/base.html" %} {% load static %} {% load custom_filter %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">予約カレンダー</div>
+
+<div>
+  <div class="flex items-center justify-between mb-2">
+    <a
+      href="{% url 'line:calendar' service_id=service_id staff_id=staff.id year=current_year week=current_week|add:'-1' %}{% if reservation_id %}?reservation_id={{ reservation_id }}{% endif %}{% if reservation_id %}&{% else %}?{% endif %}line_id={{line_id}}"
+    >
+      <div class="border rounded-full px-3 py-1 shadow">前の週へ</div>
+    </a>
+    <a
+      href="{% url 'line:calendar' service_id=service_id staff_id=staff.id year=current_year week=current_week|add:'1' %}{% if reservation_id %}?reservation_id={{ reservation_id }}{% endif %}{% if reservation_id %}&{% else %}?{% endif %}line_id={{line_id}}"
+    >
+      <div class="border rounded-full px-3 py-1 shadow">次の週へ</div>
+    </a>
+  </div>
+
+  <div class="text-center text-white bg-black py-2">
+    {{current_year}}年{{current_month}}月
+  </div>
+
+  <table class="text-center w-full border">
+    <thead>
+      <tr class="border-b text-sm">
+        <th class="border-r p-1">日時</th>
+        {% for date in week_dates %}
+        <th
+          class="border-r p-1 {% if date.weekday == 5 %}text-blue-500{% elif date.weekday == 6 %}text-red-500{% endif %}"
+        >
+          {{ date|date:"d" }} {{ date|date:"(D)" }}
+        </th>
+        {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for time_slot in time_slots %}
+      <tr class="border-b text-sm">
+        <td class="border-r p-1">{{ time_slot|time:"H:i" }}</td>
+        {% for date in week_dates %}
+        <td class="border-r">
+          {% with availability|get_date_availability:date|get_time_slot_availability:time_slot as slot_available %}
+            {% if slot_available %}
+              <div class="bg-gray-400 p-1 flex items-center justify-center">
+                <img src="{% static 'img/cross.svg' %}" alt="" class="w-6 h-6" />
+              </div>
+            {% else %}
+              <a
+                href="{% url 'line:reserve' service_id=service_id staff_id=staff.id year=current_year month=date|date:'m' day=date|date:'d' hour=time_slot|time:'H' minute=time_slot|time:'i' %}{% if reservation_id %}?reservation_id={{ reservation_id }}{% endif %}{% if reservation_id %}&{% else %}?{% endif %}line_id={{line_id}}"
+              >
+                <div class="p-1 flex items-center justify-center">
+                  <img src="{% static 'img/circle.svg' %}" alt="" class="w-6 h-6" />
+                </div>
+              </a>
+            {% endif %}
+          {% endwith %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

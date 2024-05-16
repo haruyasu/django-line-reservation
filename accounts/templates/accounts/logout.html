@@ -1,0 +1,17 @@
+{% extends "app/base.html" %} {% block content %}
+
+<div class="text-center font-bold text-2xl mb-5">ログアウトしますか？</div>
+
+<form method="post">
+  {% csrf_token %}
+  <div class="text-center">
+    <button
+      class="bg-red-500 text-white font-bold w-full rounded py-2 max-w-[300px] hover:bg-red-500/80"
+      type="submit"
+    >
+      ログアウト
+    </button>
+  </div>
+</form>
+
+{% endblock %}

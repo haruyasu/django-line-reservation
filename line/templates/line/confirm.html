@@ -1,0 +1,20 @@
+{% extends "line/base.html" %} {% load static %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">予約内容確認</div>
+
+<div class="font-bold mb-2">メニュー</div>
+<div class="mb-5">{{ service.name }}</div>
+
+<div class="font-bold mb-2">指名スタッフ</div>
+<div class="mb-5">{{ staff.user.name }}</div>
+
+<div class="font-bold mb-2">予約日時</div>
+<div class="mb-5">{{ reservation_date }}</div>
+
+<form method="post" action="">
+  {% csrf_token %}
+  <div class="text-center">
+    <button class="bg-black text-white font-bold w-full rounded py-2" type="submit">予約を確定する</button>
+  </div>
+</form>
+
+{% endblock %}

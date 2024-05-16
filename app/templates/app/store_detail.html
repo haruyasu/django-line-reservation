@@ -1,0 +1,91 @@
+{% extends "app/base.html" %} {% load static %} {% load custom_filter %} {% block content %}
+<div class="text-center font-bold text-2xl mb-5">{{ store.name }}</div>
+
+<div class="mb-5">
+  <div class="relative pb-[56.25%] overflow-hidden rounded-t-md">
+    {% if store.image %}
+    <img
+      src="{{store.image.url}}"
+      alt="画像"
+      class="absolute top-0 left-0 w-full h-full object-cover"
+    />
+    {% else %}
+    <img
+      src="{% static 'img/noImage.png' %}"
+      alt="画像"
+      class="absolute top-0 left-0 w-full h-full object-cover"
+    />
+    {% endif %}
+  </div>
+
+  <div class="p-2 space-y-1">
+    <div>住所：{{ store.address }}</div>
+    <div>電話番号：{{ store.tel }}</div>
+    <div>営業時間：{{ store.open_time }}～{{ store.close_time }}</div>
+    <div>定休日：{{ store.get_closed_days }}</div>
+    <div class="whitespace-pre-line">{{ store.description }}</div>
+  </div>
+</div>
+
+<div class="text-center font-bold text-2xl mb-5">サービス一覧</div>
+
+<div class="grid grid-cols-2 gap-5">
+  {% for service in services %}
+  <div class="border rounded-md flex flex-col">
+    <div class="relative pb-[56.25%] overflow-hidden rounded-t-md">
+      {% if service.image %}
+      <img
+        src="{{service.image.url}}"
+        alt="画像"
+        class="absolute top-0 left-0 w-full h-full object-cover"
+      />
+      {% else %}
+      <img
+        src="{% static 'img/noImage.png' %}"
+        alt="画像"
+        class="absolute top-0 left-0 w-full h-full object-cover"
+      />
+      {% endif %}
+    </div>
+
+    <div class="p-2 space-y-1 flex flex-col flex-1">
+      <div class="mb-5 flex-1">
+        <div class="font-bold">{{ service.name }}</div>
+        <div>所要時間：{{ service.duration }}時間</div>
+        <div>料金：{{ service.price }}円</div>
+        <div class="whitespace-pre-line">{{ service.description }}</div>
+      </div>
+
+      {% if has_staff_profile %}
+      <form
+        action="{% url 'app:store_detail' store.id service.id %}"
+        method="post"
+      >
+        {% csrf_token %} {% if services_status|get_item:service.id %}
+        <input type="hidden" name="action" value="remove" />
+        <button
+          class="bg-red-500 py-2 rounded text-white w-full text-sm"
+          type="submit"
+        >
+          解除する
+        </button>
+        {% else %}
+        <input type="hidden" name="action" value="assign" />
+        <button
+          class="bg-black py-2 rounded text-white w-full text-sm"
+          type="submit"
+        >
+          担当する
+        </button>
+
+        {% endif %}
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-span-2 text-center">サービスが登録されていません</div>
+  {% endfor %}
+</div>
+
+{% endblock %}
